@@ -1,4 +1,5 @@
-import json
+import json 
+from typing import Dict 
 
 
 def get_txt(name: str) -> str:
@@ -23,7 +24,7 @@ def get_txt(name: str) -> str:
 
 
 
-def get_json(name: str) -> 'dict[str, str]':
+def get_json(name: str) -> Dict[str, str]:
     """
     The function is for reading .json file
     
@@ -63,10 +64,29 @@ def write_txt(name: str, text: str) -> None:
         print(f"An error occurred while writing the file: {str(e)}.")
 
 
+def get_frequency(name: str) -> Dict[str, str]:
+    """
+    The function counts the frequency of characters appearing in the text
+
+    
+    Args:
+            name: text for analysis
+
+    Results:
+            dict: a dictionary in which the key is a symbol and the value is a frequency
+    """
+    alphabet = "АБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЬЫЪЭЮЯ.,?:— "
+    a = ''.join(filter(lambda x: x in alphabet, get_txt(name))) 
+    return {i: a.count(i) for i in set(a)}
+    # print({i: a.count(i) for i in set(a)})
+
+
 def main() -> None:
     
     name = 'lab_1/task1/original.txt'
-    get_txt(name)
+    # get_txt(name)
 
-    name_json = 'lab_1/task1/key.json'
-    get_json(name_json)
+    # name_json = 'lab_1/task1/key.json'
+    # get_json(name_json) 
+
+    get_frequency(name)
