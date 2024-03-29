@@ -81,12 +81,36 @@ def get_frequency(name: str) -> Dict[str, str]:
     # print({i: a.count(i) for i in set(a)})
 
 
+def text_encrypted(filename: str, jsonfile: Dict[str, str]) -> str:
+    """
+    The function encrypts the text using an encryption key
+
+
+    Args:
+            filename: text for encryption
+            jsonfile: encryption key
+
+    Results:
+            result: encrypted text
+    """
+    text = get_txt(filename)
+    json_data = get_json(jsonfile)
+    print(''.join([json_data.get(l, l) for l in text]))
+
+
 def main() -> None:
     
     name = 'lab_1/task1/original.txt'
     # get_txt(name)
 
-    # name_json = 'lab_1/task1/key.json'
+    name_json = 'lab_1/task1/key.json'
     # get_json(name_json) 
 
-    get_frequency(name)
+    # get_frequency(name)
+
+    text = text_encrypted(name, name_json)
+
+    name2 = 'lab_1/task1/encrypted.txt'
+
+    # write_txt(name2, text)
+    
