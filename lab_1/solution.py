@@ -23,7 +23,6 @@ def get_txt(name: str) -> str:
         print(f"An error occurred while reading the file: {str(e)}.")
 
 
-
 def get_json(name: str) -> Dict[str, str]:
     """
     The function is for reading .json file
@@ -77,8 +76,7 @@ def get_frequency(name: str) -> Dict[str, str]:
     """
     alphabet = "АБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЬЫЪЭЮЯ.,?:— "
     a = ''.join(filter(lambda x: x in alphabet, get_txt(name))) 
-    return {i: a.count(i) for i in set(a)}
-    # print({i: a.count(i) for i in set(a)})
+    return {i: a.count(i) for i in set(a)} 
 
 
 def text_encrypted(filename: str, jsonfile: Dict[str, str]) -> str:
