@@ -76,10 +76,12 @@ def get_frequency(name: str) -> Dict[str, str]:
     """
     cnt = len(get_txt(name))
     a = ''.join(filter(lambda x: x in get_txt(name), get_txt(name))) 
-    return {i: a.count(i)/cnt for i in set(a)}
+    b = {i: a.count(i)/cnt for i in set(a)}
+    sort = dict(sorted(b.items(), key=lambda x: x[1], reverse=True))
+    return sort
 
 
-def text_encrypted(filename: str, jsonfile: Dict[str, str]) -> str:
+def text_encrypted(name: str, key: Dict[str, str]) -> str:
     """
     The function encrypts the text using an encryption key
 
@@ -91,38 +93,39 @@ def text_encrypted(filename: str, jsonfile: Dict[str, str]) -> str:
     Results:
             result: encrypted text
     """
-    text = get_txt(filename)
-    json_data = get_json(jsonfile)
-    sort = dict(sorted(''.join([json_data.get(l, l) for l in text]), reverse=True))
-    return sort
-    # def decryption(path_encryption: str, path_key: str, path_decryption: str) -> None:
-    # key = read_json(path_key)
-    # decrypted_text = ''
-    # text = read_file(path_encryption)
-    # for char in text:
-    #     if char in key:
-    #         decrypted_text += key[char]
-    #     else:
-    #         decrypted_text += char
-    # write_file(path_decryption, decrypted_text)
+    text = get_txt(name)
+    json_data = get_json(key)
+    s = ''.join([json_data.get(l, l) for l in text])
+    return s
 
 
-def decryption_text(filename: str, key: Dict[str, str], new_file: str) -> str:
+def decryption_text(name: str, key: Dict[str, str]) -> str:
     """
+    The function decrypts the text using the encryption key
+
+    Args:
+            name: encrypted text
+            key: json file with an encryption key
+    
+    Results:
+            text: decrypted text
     """
-    k = get_json(key)
-    text = get_txt(filename)
-    res = ''
-    for c in text:
-        if c in k:
-            res += str(k[c])
-        else:
-            res += c
-    return res
+    text = get_txt(name)
+    dict1 = get_json(key)
+    text2 = ''
+    for letter in text:
+        text2 += letter.replace(letter, dict1[letter])
+    return text2
 
 
 def write_json(name: str, data: dict) -> Dict[str, str]:
     """
+    The function for writing to a json file
+
+
+    Args:
+            name: path to the file to write
+            data: data to write to a file
     """
     try: 
         with open(name, 'w', encoding='utf-8') as f:
@@ -140,17 +143,16 @@ def main() -> None:
     name_json = 'lab_1/task1/key.json'
     # get_json(name_json) 
 
-    name3 = 'lab_1/task2/decrypted.txt'
-    k1 = get_frequency(name3)
-    path = 'lab_1/task2/freq.json'
-    # write_json(path, 1)
+    name3 = 'lab_1/task2/encrypted.txt'
+    # k1 = get_frequency(name3)
+    # path = 'lab_1/task2/freq.json'
+    # write_json(path, k1)
     # text = text_encrypted(name, name_json)
 
     # name2 = 'lab_1/task1/encrypted.txt'
 
     # write_txt(name2, text)
 
-    path2 = 'lab_1/task2/cod5.txt'
-
-    t = decryption_text(name3, path, path2)
-    write_txt(path2, t)
+    path2 = 'lab_1/task2/decrypted.txt'
+    path3 = 'lab_1/task2/key2.json'
+    t = decryption_text(name3, path3)
