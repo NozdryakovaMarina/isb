@@ -156,3 +156,4 @@ def main() -> None:
     path2 = 'lab_1/task2/decrypted.txt'
     path3 = 'lab_1/task2/key2.json'
     t = decryption_text(name3, path3)
+    write_txt(path2, t)
