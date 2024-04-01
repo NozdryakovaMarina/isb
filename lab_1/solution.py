@@ -136,3 +136,7 @@ def main() -> None:
     t = decryption_text('lab_1/task2/encrypted.txt', 'lab_1/task2/key2.json')
 
     write_txt('lab_1/task2/decrypted.txt', t)
+
+
+if __name__ == "__main__":
+    main()
