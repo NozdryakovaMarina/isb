@@ -1,11 +1,11 @@
-import json 
-from typing import Dict 
+import json
+
+from typing import Dict
 
 
 def get_txt(name: str) -> str:
     """
     The function is for reading .txt file
-    
 
     Args:
             name: path to the .txt file
@@ -26,7 +26,6 @@ def get_txt(name: str) -> str:
 def get_json(name: str) -> Dict[str, str]:
     """
     The function is for reading .json file
-    
 
     Args:
             name: path .json file
@@ -48,7 +47,6 @@ def write_txt(name: str, text: str) -> None:
     """
     The function for writing text to a file
 
-
     Args:
             name: path to the file to write
             text: text to write to a file
@@ -67,15 +65,15 @@ def get_frequency(name: str) -> Dict[str, str]:
     """
     The function counts the frequency of characters appearing in the text
 
-    
     Args:
             name: text for analysis
 
     Results:
-            dict: a dictionary in which the key is a symbol and the value is a frequency
+            dict: a dictionary in which the key is
+            a symbol and the value is a frequency
     """
     cnt = len(get_txt(name))
-    a = ''.join(filter(lambda x: x in get_txt(name), get_txt(name))) 
+    a = ''.join(filter(lambda x: x in get_txt(name), get_txt(name)))
     b = {i: a.count(i)/cnt for i in set(a)}
     sort = dict(sorted(b.items(), key=lambda x: x[1], reverse=True))
     return sort
@@ -84,7 +82,6 @@ def get_frequency(name: str) -> Dict[str, str]:
 def text_encrypted(name: str, key: Dict[str, str]) -> str:
     """
     The function encrypts the text using an encryption key
-
 
     Args:
             filename: text for encryption
@@ -95,7 +92,7 @@ def text_encrypted(name: str, key: Dict[str, str]) -> str:
     """
     text = get_txt(name)
     json_data = get_json(key)
-    s = ''.join([json_data.get(l, l) for l in text])
+    s = ''.join([json_data.get(letter, letter) for letter in text])
     return s
 
 
@@ -106,7 +103,7 @@ def decryption_text(name: str, key: Dict[str, str]) -> str:
     Args:
             name: encrypted text
             key: json file with an encryption key
-    
+
     Results:
             text: decrypted text
     """
@@ -122,12 +119,11 @@ def write_json(name: str, data: dict) -> Dict[str, str]:
     """
     The function for writing to a json file
 
-
     Args:
             name: path to the file to write
             data: data to write to a file
     """
-    try: 
+    try:
         with open(name, 'w', encoding='utf-8') as f:
             res = json.dump(data, f, ensure_ascii=False, indent=1)
         return res
@@ -136,24 +132,7 @@ def write_json(name: str, data: dict) -> Dict[str, str]:
 
 
 def main() -> None:
-    
-    name = 'lab_1/task1/original.txt'
-    # get_txt(name)
 
-    name_json = 'lab_1/task1/key.json'
-    # get_json(name_json) 
+    t = decryption_text('lab_1/task2/encrypted.txt', 'lab_1/task2/key2.json')
 
-    name3 = 'lab_1/task2/encrypted.txt'
-    # k1 = get_frequency(name3)
-    # path = 'lab_1/task2/freq.json'
-    # write_json(path, k1)
-    # text = text_encrypted(name, name_json)
-
-    # name2 = 'lab_1/task1/encrypted.txt'
-
-    # write_txt(name2, text)
-
-    path2 = 'lab_1/task2/decrypted.txt'
-    path3 = 'lab_1/task2/key2.json'
-    t = decryption_text(name3, path3)
-    write_txt(path2, t)
+    write_txt('lab_1/task2/decrypted.txt', t)
