@@ -1,0 +1,8 @@
+{
+    "text_decrypted_task1": "lab_1/task1/encrypted.txt",
+    "key_task1": "lab_1/task1/key.json",
+    "text_encrypted_task1": "lab_1/task1/origin.txt",
+    "text_encrypted_task2": "lab_1/task2/encrypted.txt",
+    "text_decrypted_task2": "lab_1/task2/decrypted.txt",
+    "key_task2": "lab_1/task2/key2.json"
+}

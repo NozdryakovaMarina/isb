@@ -134,10 +134,12 @@ def write_json(name: str, data: dict) -> Dict[str, str]:
 
 def main() -> None:
  
-    t = decryption_text(os.path.join('lab_1', 'task2', 'encrypted.txt'),
-                        os.path.join('lab_1', 'task2', 'key2.json'))
-
-    write_txt(os.path.join('lab_1', 'task2', 'decrypted.txt'), t)
+    path = get_json("lab_1/path.json")
+    encrypted_task2 = path["text_encrypted_task2"]
+    key = path["key_task2"]
+    decrypted_task2 = path["text_decrypted_task2"]
+    t = decryption_text(encrypted_task2, key)
+    write_txt(decrypted_task2, t)
 
 
 if __name__ == "__main__":
