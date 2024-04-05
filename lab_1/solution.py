@@ -1,3 +1,4 @@
+import os
 import json
 
 from typing import Dict
@@ -132,10 +133,11 @@ def write_json(name: str, data: dict) -> Dict[str, str]:
 
 
 def main() -> None:
+ 
+    t = decryption_text(os.path.join('lab_1', 'task2', 'encrypted.txt'),
+                        os.path.join('lab_1', 'task2', 'key2.json'))
 
-    t = decryption_text('lab_1/task2/encrypted.txt', 'lab_1/task2/key2.json')
-
-    write_txt('lab_1/task2/decrypted.txt', t)
+    write_txt(os.path.join('lab_1', 'task2', 'decrypted.txt'), t)
 
 
 if __name__ == "__main__":
