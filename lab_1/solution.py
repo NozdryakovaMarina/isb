@@ -1,7 +1,7 @@
-import os
 import json
 
 from typing import Dict
+from invariable import path_to_file
 
 
 def get_txt(name: str) -> str:
@@ -134,7 +134,7 @@ def write_json(name: str, data: dict) -> Dict[str, str]:
 
 def main() -> None:
  
-    path = get_json("lab_1/path.json")
+    path = get_json(path_to_file)
     encrypted_task2 = path["text_encrypted_task2"]
     key = path["key_task2"]
     decrypted_task2 = path["text_decrypted_task2"]
