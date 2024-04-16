@@ -1,0 +1,1 @@
+path = "lab_2/data.json"
