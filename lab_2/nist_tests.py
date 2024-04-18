@@ -33,11 +33,12 @@ def frequency_bitwise_test(name: str) -> float:
     The function checks whether the sequence is random enough
 
     Args:
-            name: path .json file
+             name: path .json file
 
     Returns:
-            P-value is the probability that the
-            generator produces values comparable to the reference
+             float: P-value is the probability that the
+                    generator produces values comparable
+                    to the reference
     """
     s = abs(sum(1 if i == "1" else -1 for i in name)) / math.sqrt(len(name))
     return math.erfc(s / math.sqrt(2))
@@ -52,8 +53,8 @@ def identical_consecutive_bits_test(name: str) -> float:
     Args:    name: path .json file
 
     Returns:
-             P-value is the probability that the generator
-             produces values comparable to the reference
+             float: P-value is the probability that the generator
+                    produces values comparable to the reference
     """
     n = len(name)
     prop_units = name.count("1") / n
@@ -107,7 +108,7 @@ def longest_sequence_units_test(name: str) -> float:
     v4 = len(count_max) - v1 - v2 - v3
     v = [v1, v2, v3, v4]
 
-    hi = sum((v[i] - 16 * PI[i])** 2 / (16 * PI[i]) for i in range(4))
+    hi = sum((v[i] - 16 * PI[i]) ** 2 / (16 * PI[i]) for i in range(4))
     return mpmath.gammainc(1.5, hi / 2)
 
 
