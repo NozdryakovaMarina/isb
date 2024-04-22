@@ -52,16 +52,17 @@ def identical_consecutive_bits_test(name: str) -> float:
     Args:    name: path .json file
 
     Returns:
-             float: P-value is the probability that the generator
+             p_value: P-value is the probability that the generator
                     produces values comparable to the reference
     """
     n = len(name)
-    prop_units = name.count("1") / n
-    if abs(prop_units - 0.5) >= 2 / math.sqrt(n):
+    units = name.count("1") / n
+    if abs(units - 0.5) >= 2 / math.sqrt(n):
         return 0
     v = sum(0 if name[i] == name[i + 1] else 1 for i in range(n - 1))
-    return math.erfc(abs(v - 2 * n * prop_units * (1 - prop_units)) /
-                     (2 * math.sqrt(2 * n * prop_units * (1 - prop_units))))
+    p_value = math.erfc(abs(v - 2 * n * units * (1 - units)) /
+                       (2 * math.sqrt(2 * n) * units * (1 - units)))
+    return p_value
 
 
 def max_sequence_units(name: str) -> int:
@@ -112,7 +113,7 @@ def longest_sequence_units_test(name: str) -> float:
 
 
 def main() -> None:
-    name = get_json(path)["cpp"]
+    name = get_json(path)["java"]
     frequency_bitwise_test(name)
     identical_consecutive_bits_test(name)
     longest_sequence_units_test(name)
