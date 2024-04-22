@@ -4,7 +4,7 @@ import mpmath
 
 from typing import Dict
 
-from const import path, PI
+from const import PATH, PI
 
 
 def get_json(name: str) -> Dict[str, str]:
@@ -113,7 +113,7 @@ def longest_sequence_units_test(name: str) -> float:
 
 
 def main() -> None:
-    name = get_json(path)["java"]
+    name = get_json(PATH)["java"]
     frequency_bitwise_test(name)
     identical_consecutive_bits_test(name)
     longest_sequence_units_test(name)
