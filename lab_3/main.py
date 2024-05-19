@@ -27,7 +27,7 @@ if __name__ == '__main__':
                         '4 — symmetric key encryption'
                         '5 — symmetric key decryption')
     parser.add_argument('-s', '--settings', type=str,
-                        help='Path to file with the settings')
+                        help='Path to the user settings file')
 
     args = parser.parse_args()
 
