@@ -3,7 +3,7 @@ import os
 from cryptography.hazmat.primitives import padding
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 
-from files import *
+from files import FilesHelper
 
 
 class Symmetric:
@@ -31,7 +31,7 @@ class Symmetric:
         Args: 
                 file_name: path to the file to write
         """
-        write_bytes(file_name, self.key)
+        FilesHelper.write_bytes(file_name, self.key)
 
     @staticmethod
     def deserialization_symmetric_key(file_name: str) -> bytes:
@@ -44,7 +44,7 @@ class Symmetric:
         Return: 
                 bytes: symmetric key
         """
-        key = get_bytes(file_name)
+        key = FilesHelper.get_bytes(file_name)
         return key
 
     def encrypted_text(self, file_name: str, encryption_path: str, key: bytes) -> bytes:
@@ -60,7 +60,7 @@ class Symmetric:
                  bytes: encrypted text
         """
         padder = padding.PKCS7(128).padder()
-        text = get_bytes(file_name)
+        text = FilesHelper.get_bytes(file_name)
         padded_text = padder.update(text) + padder.finalize()
 
         iv = os.urandom(16)
@@ -69,7 +69,7 @@ class Symmetric:
         encryptor = cipher.encryptor()
         c_text = encryptor.update(padded_text) + encryptor.finalize()
         c_text = iv + c_text
-        write_bytes(encryption_path, c_text)
+        FilesHelper.write_bytes(encryption_path, c_text)
 
         return c_text
 
@@ -85,7 +85,7 @@ class Symmetric:
         Return:
                 decrypted text
         """
-        en_text = get_bytes(encryption_path)
+        en_text = FilesHelper.get_bytes(encryption_path)
 
         iv = en_text[:16]
         key = self.deserialization_symmetric_key(key)
@@ -99,7 +99,7 @@ class Symmetric:
         unpadder = padding.PKCS7(128).unpadder()
         unpadder_dc_text = unpadder.update(dc_text) +  unpadder.finalize()
 
-        write_txt(decryptor_path, unpadder_dc_text.decode('UTF-8'))
+        FilesHelper.write_txt(decryptor_path, unpadder_dc_text.decode('UTF-8'))
 
         return unpadder_dc_text.decode('UTF-8')
- 
+  

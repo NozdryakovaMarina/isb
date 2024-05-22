@@ -4,7 +4,7 @@ from enum import Enum
 
 from symmetric import Symmetric
 from asymmetric import Asymmetric
-from files import *
+from files import FilesHelper
 
 
 class Direction(Enum):
@@ -33,7 +33,7 @@ if __name__ == '__main__':
 
     symmetric = Symmetric()
     asymmetric = Asymmetric()
-    settings = get_json(args.settings)
+    settings = FilesHelper.get_json(args.settings)
 
     match(int(args.direction)):
         case Direction.SYMMETRIC_KEY.value:
@@ -56,5 +56,5 @@ if __name__ == '__main__':
             asymmetric.decrypt_symmetric_key(settings['private_key'],
             settings['encrypt_symmetric_key'], settings['decrypt_symmetric_key'])
         case _:
-            print("I can't execute this command(")
+            print(f"I can't execute this command(")
              

@@ -1,14 +1,12 @@
 import os
 
 from cryptography.hazmat.primitives.asymmetric import rsa
-from cryptography.hazmat.primitives import serialization
-from cryptography.hazmat.primitives.serialization import load_pem_public_key, load_pem_private_key
 from cryptography.hazmat.primitives.asymmetric import padding
 from cryptography.hazmat.primitives import hashes
 from typing import Tuple
 
 from symmetric import Symmetric
-from files import *
+from files import FilesHelper
 
 
 class Asymmetric:
@@ -43,10 +41,7 @@ class Asymmetric:
         Args:
                 file_name: path to the file to record the public key
         """
-        with open(file_name, 'wb') as public_out:
-            public_out.write(self.public_key.public_bytes
-                            (encoding=serialization.Encoding.PEM,
-                            format=serialization.PublicFormat.SubjectPublicKeyInfo))
+        FilesHelper.write_public_key(file_name, rsa.RSAPublicKey(self.public_key))
 
     def serialization_private_key(self, file_name: str) -> None:
         """
@@ -55,35 +50,25 @@ class Asymmetric:
         Args:
                 file_name: path to the file to record the private key
         """
-        with open(file_name, 'wb') as private_out:
-            private_out.write(self.private_key.private_bytes(
-                             encoding=serialization.Encoding.PEM,
-                             format=serialization.PrivateFormat.TraditionalOpenSSL,
-                             encryption_algorithm=serialization.NoEncryption()))
+        FilesHelper.write_public_key(file_name, rsa.RSAPrivateKey(self.private_key))
 
-    def deserialization_public_key(self, file_name: str) -> bytes:
+    def deserialization_public_key(self, file_name: str) -> rsa.RSAPublicKey:
         """
         Deserialization of the public key
 
         Args:
                 file_name: path to the public key file
         """
-        with open(file_name, 'rb') as pem_in:
-            public_bytes = pem_in.read()
-        self.public_key = load_pem_public_key(public_bytes)
-        return self.public_key
+        FilesHelper.read_public_key(file_name)
 
-    def deserialization_private_key(self, file_name: str) -> bytes:
+    def deserialization_private_key(self, file_name: str) -> rsa.RSAPrivateKey:
         """
         Deserialization of the private key
 
         Args:
                 file_name: path to the private key file
         """
-        with open(file_name, 'rb') as pem_in:
-            private_bytes = pem_in.read()
-        self.private_key = load_pem_private_key(private_bytes, password=None,)
-        return self.private_key
+        FilesHelper.read_private_key(file_name)
 
     def encrypt_symmetric_key(self, path_public: str, path_symmetric: str,  path_encrypted: str) -> None:
         """
@@ -100,7 +85,7 @@ class Asymmetric:
                             (mgf=padding.MGF1(algorithm=hashes.SHA256()),
                              algorithm=hashes.SHA256(), label=None))
 
-        write_bytes(path_encrypted, c_text)
+        FilesHelper.write_bytes(path_encrypted, c_text)
 
 
     def decrypt_symmetric_key(self, path_private: str, path_encrypted: str, path_decrypted: str) -> None:
@@ -118,4 +103,4 @@ class Asymmetric:
                               padding.OAEP(mgf=padding.MGF1(algorithm=hashes.SHA256()),
                               algorithm=hashes.SHA256(), label=None))
 
-        write_bytes(path_decrypted, dc_text)
+        FilesHelper.write_bytes(path_decrypted, dc_text)
